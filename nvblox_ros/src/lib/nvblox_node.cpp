@@ -22,6 +22,9 @@
 
 #include "nvblox_ros/conversions.hpp"
 
+#include "rclcpp/qos.hpp"
+#include <rmw/qos_profiles.h> 
+
 namespace nvblox
 {
 
@@ -57,8 +60,8 @@ NvbloxNode::NvbloxNode()
   mapper_ = std::make_unique<RgbdMapper>(voxel_size_);
 
   // Subscribe to synchronized depth + cam_info topics
-  depth_sub_.subscribe(this, "depth/image");
-  depth_camera_info_sub_.subscribe(this, "depth/camera_info");
+  depth_sub_.subscribe(this, "depth/image", rmw_qos_profile_sensor_data);
+  depth_camera_info_sub_.subscribe(this, "depth/camera_info",rmw_qos_profile_sensor_data);
 
   constexpr int kQueueSize = 2;
   timesync_depth_.reset(
@@ -71,8 +74,8 @@ NvbloxNode::NvbloxNode()
       std::placeholders::_2));
 
   // Subscribe to synchronized color + cam_info topics
-  color_sub_.subscribe(this, "color/image");
-  color_camera_info_sub_.subscribe(this, "color/camera_info");
+  color_sub_.subscribe(this, "color/image", rmw_qos_profile_sensor_data);
+  color_camera_info_sub_.subscribe(this, "color/camera_info", rmw_qos_profile_sensor_data);
 
   timesync_color_.reset(
     new message_filters::Synchronizer<time_policy_t>(
