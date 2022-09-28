@@ -38,7 +38,7 @@ bool RosConverter::colorImageFromImageMessage(
   CHECK_NOTNULL(color_image);
 
   // First check if we actually have a valid image here.
-  if (image_msg->encoding != "rgb8") {
+  if (image_msg->encoding != "rgb8" && image_msg->encoding != "bgr8" ) {
     return false;
   }
 
