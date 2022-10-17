@@ -510,13 +510,18 @@ void NvbloxNode::savePly(
   io::outputVoxelLayerToPly(
     mapper_->tsdf_layer(),
     output_dir_ + "/ros2_tsdf.ply");
+  auto start = std::chrono::high_resolution_clock::now();
   io::outputVoxelLayerToPly(
     mapper_->esdf_layer(),
     output_dir_ + "/ros2_esdf.ply");
+  auto stop = std::chrono::high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+  auto durcount = duration.count();
   io::outputMeshLayerToPly(
     mapper_->mesh_layer(),
     output_dir_ + "/ros2_mesh.ply");
   RCLCPP_INFO(get_logger(), "Output PLY files to %s", output_dir_.c_str());
+  RCLCPP_INFO(get_logger(), "Time needed for writing ESDF: %ld", durcount);
 }
 
 }  // namespace nvblox
