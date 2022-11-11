@@ -1,4 +1,5 @@
 [submodule "nvblox"]
 	path = nvblox
-	url = https://github.com/nvidia-isaac/nvblox.git
-	branch = public
+	url = https://github.com/DinoDionysos/nvblox.git
+	# original https://github.com/nvidia-isaac/nvblox.git
+	branch = ait_lighthouse
